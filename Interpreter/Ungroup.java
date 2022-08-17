@@ -3,6 +3,9 @@ package is.Interpreter;
 import is.shapes.Singleton.GraphicObjectHolder;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.Group;
+import is.shapes.specificcommand.UnGroupCommand;
+
+import java.util.List;
 
 public class Ungroup implements Expression{
     private Expression id;
@@ -15,7 +18,7 @@ public class Ungroup implements Expression{
     public String interpret() {
         String ris=null;
         Group g =(Group) GraphicObjectHolder.getInstance().getObject(Integer.parseInt(id.interpret()));
-
+        GraphicObjectHolder.getInstance().getHistory().handle(new UnGroupCommand(g));
         return null;
     }
 }

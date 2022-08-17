@@ -31,9 +31,7 @@ public abstract class AbstractGraphicObject implements GraphicObject, Cloneable 
 	protected void notifyListeners(GraphicEvent e) {
 
 		for (GraphicObjectListener gol : listeners)
-
 			gol.graphicChanged(e);
-
 	}
 
 	@Override
