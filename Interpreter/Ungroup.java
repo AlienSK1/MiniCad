@@ -1,5 +1,9 @@
 package is.Interpreter;
 
+import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.model.GraphicObject;
+import is.shapes.model.Group;
+
 public class Ungroup implements Expression{
     private Expression id;
 
@@ -10,7 +14,8 @@ public class Ungroup implements Expression{
     @Override
     public String interpret() {
         String ris=null;
-        //todo
+        Group g =(Group) GraphicObjectHolder.getInstance().getObject(Integer.parseInt(id.interpret()));
+
         return null;
     }
 }

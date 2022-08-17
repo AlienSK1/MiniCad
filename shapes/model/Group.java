@@ -26,13 +26,10 @@ public class Group extends AbstractGraphicObject{
         }
         notifyListeners(new GraphicEvent(this));
     }
-
-
     @Override
     public Point2D getPosition() {
         return new Point2D.Double(position.getX(), position.getY());
     }
-
     @Override
     public Dimension2D getDimension() {
         Dimension dim = new Dimension();
@@ -45,7 +42,6 @@ public class Group extends AbstractGraphicObject{
         dim.setSize(width,height);
         return dim;
     }
-
     @Override
     public void scale(double factor) {
         if (factor <= 0)
