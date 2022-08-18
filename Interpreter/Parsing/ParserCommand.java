@@ -15,82 +15,72 @@ import java.io.Reader;
 
 public class ParserCommand {
 
-    private AnalizzatoreLessicale lexer;
+    private final AnalizzatoreLessicale lexer;
     private Simbolo simbolo;
-    private Cmd command;
+    private final Cmd command;
 
     public ParserCommand(Reader in){
         this.lexer=new AnalizzatoreLessicale(in);
         this.command=command();
-        atteso(Simbolo.EOF);
     }
 
     private Cmd command(){
-        Expression specificCommand= specificCommand();
-        return new Cmd(specificCommand);
+        return new Cmd(specificCommand());
     }
 
     private Expression specificCommand(){
-        Expression ris=null;
-        Simbolo s = lexer.nextSimbolo();
+        simbolo = lexer.nextSimbolo();
         Expression typeConstr,pos,id,subj,listId,factor;
-        switch (s){
+        switch (simbolo){
             case CREATE:
                 typeConstr=typeConstr();
                 pos= pos();
-                ris= new Create(typeConstr,pos);
-                break;
+                return new Create(typeConstr,pos);
             case REMOVE:
                 id = id();
-                ris= new Remove(id);
-                break;
+                return new Remove(id);
             case LIST:
                 subj = subject();
-                break;
+                return new List(subj);
             case MOVE:
                 id=id();
+                simbolo= lexer.nextSimbolo();
                 pos=pos();
-                ris = new Move(false,id,pos);
-                break;
+                return new Move(false,id,pos);
             case MOVEOFF:
                 id=id();
+                simbolo=lexer.nextSimbolo();
                 pos=pos();
-                ris = new Move(true,id,pos);
-                break;
+                return new Move(true,id,pos);
             case GROUP:
                 listId=listId();
-                ris=new Group(listId);
-                break;
+                return new Group(listId);
             case UNGROUP:
                 id= id();
-                ris= new Ungroup(id);
-                break;
+                return new Ungroup(id);
             case SCALE:
                 id=id();
                 factor= factor();
-                ris= new Scale(id,factor);
-                break;
+                return new Scale(id,factor);
             case PERIMETER:
                 subj = subject();
                 if(subj instanceof Groups){
                     throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un numero o una parola chiave(ALl) o un tipo");
                 }
-                ris= new Perimeter(subj);
-                break;
+                return new Perimeter(subj);
             case AREA:
                 subj = subject();
                 if(subj instanceof Groups){
                     throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un numero o una parola chiave(ALl) o un tipo");
                 }
-                ris= new Area(subj);
-            dafault: throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un comando");
+                return new Area(subj);
+                default: throw new SyntaxException("trovato " + simbolo + " mentre si attendeva un comando");
         }
-        return ris;
     }
     private Expression typeConstr(){
         Expression ris= null;
-        Simbolo s= lexer.nextSimbolo();
-        switch (s){
+        simbolo= lexer.nextSimbolo();
+        switch (simbolo){
             case CIRCLE:
                 Expression radious=radious();
                 ris= new Circle(radious);
@@ -109,14 +99,15 @@ public class ParserCommand {
     }
 
     private Expression id(){
-        Simbolo s = lexer.nextSimbolo();
-        atteso(Simbolo.PAROLA);
+        simbolo=lexer.nextSimbolo();
+        if(simbolo!= Simbolo.PAROLA || !lexer.getString().matches("-?\\d+(\\.\\d+)?")){
+            throw new SyntaxException("trovato "+lexer.getString()+" mentre si attendeva un numero");
+        }
         return new Id(lexer.getString());
     }
     private Expression pos(){
         Expression leftValue=null;
         Expression rightValue=null;
-        Simbolo s=lexer.nextSimbolo();
         atteso(Simbolo.TONDA_APERTA);
         if(lexer.getString().matches("-?\\d+(\\.\\d+)?")){
             leftValue= new Floating(lexer.getString());
@@ -138,7 +129,7 @@ public class ParserCommand {
     }
 
     private String path(){
-        Simbolo s = lexer.nextSimbolo();
+        simbolo = lexer.nextSimbolo();
         atteso(Simbolo.TONDA_APERTA);
         atteso(Simbolo.STRINGA_QUOTATA);
         String path= lexer.getString();
@@ -149,8 +140,8 @@ public class ParserCommand {
     }
     private Expression factor(){
         Expression ris=null;
-        Simbolo s=lexer.nextSimbolo();
-        if(s==Simbolo.PAROLA && lexer.getString().matches("-?\\d+(\\.\\d+)?")){
+        simbolo=lexer.nextSimbolo();
+        if(simbolo==Simbolo.PAROLA && lexer.getString().matches("-?\\d+(\\.\\d+)?")){
             ris= new Floating(lexer.getString());
         }
         else {
@@ -160,7 +151,7 @@ public class ParserCommand {
     }
 
     private Expression radious(){
-        Simbolo s= lexer.nextSimbolo();
+        simbolo= lexer.nextSimbolo();
         atteso(Simbolo.TONDA_APERTA);
         String ris= lexer.getString();
         atteso(Simbolo.PAROLA);
@@ -170,8 +161,8 @@ public class ParserCommand {
 
     private Expression subject(){
         Expression ris=null;
-        Simbolo s= lexer.nextSimbolo();
-        switch (s){
+        simbolo= lexer.nextSimbolo();
+        switch (simbolo){
             case PAROLA:
                 if(lexer.getString().matches("-?\\d+(\\.\\d+)?")){
                     ris= new Id(lexer.getString());
@@ -194,16 +185,16 @@ public class ParserCommand {
 
     private Expression listId(){
         ListId ris=null;
-        Simbolo s = lexer.nextSimbolo();
-        while(s!= Simbolo.EOF){
-            if(s == Simbolo.PAROLA && lexer.getString().matches("-?\\d+(\\.\\d+)?")){
+        simbolo = lexer.nextSimbolo();
+        while(simbolo!= Simbolo.EOF){
+            if(simbolo == Simbolo.PAROLA && lexer.getString().matches("-?\\d+(\\.\\d+)?")){
                 if(ris==null){
                     ris= new ListId(new Id(lexer.getString()));
                 }
                 else{
                     ris.addId(new Id(lexer.getString()));
                 }
-                s=lexer.nextSimbolo();
+                simbolo=lexer.nextSimbolo();
             }
             else{
                 throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un numero");
@@ -213,10 +204,18 @@ public class ParserCommand {
     }
 
     private void atteso(Simbolo s) {
+        System.out.println(simbolo+" "+s);
+        System.out.println(lexer.getString());
         if (simbolo != s) {
             String msg = " trovato " + simbolo + " mentre si attendeva " + s;
             throw new SyntaxException(msg);
         }
-        simbolo = lexer.nextSimbolo();
+        else if( simbolo==s){
+            simbolo = lexer.nextSimbolo();
+        }
+    }
+
+    public Cmd getCommand(){
+        return this.command;
     }
 }

@@ -17,10 +17,8 @@ public class NewObjectCmd implements Command {
 
 	@Override
 	public boolean doIt() {
-		double x = 10;
-		double y = 10;
 		GraphicObjectHolder.getInstance().addObject(go);
-		go.moveTo(x, y);
+		go.moveTo(go.getPosition().getX(),go.getPosition().getY());
 		panel.add(go);
 		return true;
 	}

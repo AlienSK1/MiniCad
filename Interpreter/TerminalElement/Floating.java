@@ -8,6 +8,6 @@ public class Floating implements TerminalElement{
 
     @Override
     public String interpret() {
-        return String.format("%lf",number);
+        return number+"";
     }
 }
