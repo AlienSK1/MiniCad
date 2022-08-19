@@ -44,12 +44,10 @@ public class ParserCommand {
                 return new List(subj);
             case MOVE:
                 id=id();
-                simbolo= lexer.nextSimbolo();
                 pos=pos();
                 return new Move(false,id,pos);
             case MOVEOFF:
                 id=id();
-                simbolo=lexer.nextSimbolo();
                 pos=pos();
                 return new Move(true,id,pos);
             case GROUP:
@@ -109,31 +107,30 @@ public class ParserCommand {
         Expression leftValue=null;
         Expression rightValue=null;
         atteso(Simbolo.TONDA_APERTA);
+        atteso(Simbolo.PAROLA);
         if(lexer.getString().matches("-?\\d+(\\.\\d+)?")){
             leftValue= new Floating(lexer.getString());
-            simbolo=lexer.nextSimbolo();
         }
         else{
             throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un numero");
         }
         atteso(Simbolo.COMMA);
+        atteso(Simbolo.PAROLA);
         if(lexer.getString().matches("-?\\d+(\\.\\d+)?")){
             rightValue= new Floating(lexer.getString());
-            simbolo=lexer.nextSimbolo();
         }
         else{
-            throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un numero");
+            throw new SyntaxException("trovato "+lexer.getString()+" mentre si attendeva un numero");
         }
         atteso(Simbolo.TONDA_CHIUSA);
         return new Pos(leftValue,rightValue);
     }
 
     private String path(){
-        simbolo = lexer.nextSimbolo();
         atteso(Simbolo.TONDA_APERTA);
         atteso(Simbolo.STRINGA_QUOTATA);
-        String path= lexer.getString();
         atteso(Simbolo.PAROLA);
+        String path= lexer.getString();
         atteso(Simbolo.STRINGA_QUOTATA);
         atteso(Simbolo.TONDA_CHIUSA);
         return path;
@@ -151,10 +148,9 @@ public class ParserCommand {
     }
 
     private Expression radious(){
-        simbolo= lexer.nextSimbolo();
         atteso(Simbolo.TONDA_APERTA);
-        String ris= lexer.getString();
         atteso(Simbolo.PAROLA);
+        String ris= lexer.getString();
         atteso(Simbolo.TONDA_CHIUSA);
         return new Floating(ris);
     }
@@ -170,6 +166,15 @@ public class ParserCommand {
                 else {
                     throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un numero");
                 }
+                break;
+            case CIRCLE:
+                ris= new Circle(new Floating("0"));
+                break;
+            case RECTANGLE:
+                ris= new Rectangle(new Pos(new Floating("0"), new Floating("0")));
+                break;
+            case IMAGE:
+                ris = new Img("");
                 break;
             case ALL:
                 ris= new All();
@@ -194,7 +199,14 @@ public class ParserCommand {
                 else{
                     ris.addId(new Id(lexer.getString()));
                 }
+
                 simbolo=lexer.nextSimbolo();
+                if(simbolo!=Simbolo.COMMA && simbolo!=Simbolo.EOF){
+                    throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un EOF o una virgola");
+                }
+                else if( simbolo==Simbolo.COMMA){
+                    simbolo=lexer.nextSimbolo();
+                }
             }
             else{
                 throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un numero");
@@ -204,17 +216,14 @@ public class ParserCommand {
     }
 
     private void atteso(Simbolo s) {
+        simbolo = lexer.nextSimbolo();
         System.out.println(simbolo+" "+s);
         System.out.println(lexer.getString());
         if (simbolo != s) {
             String msg = " trovato " + simbolo + " mentre si attendeva " + s;
             throw new SyntaxException(msg);
         }
-        else if( simbolo==s){
-            simbolo = lexer.nextSimbolo();
-        }
     }
-
     public Cmd getCommand(){
         return this.command;
     }

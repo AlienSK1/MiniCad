@@ -17,11 +17,12 @@ public class AnalizzatoreLessicale {
         st.wordChars('A', 'Z');
         st.wordChars('0', '9');
         st.wordChars('.', '.');
+        st.wordChars('/','/');
         st.whitespaceChars('\u0000', ' ');
         st.ordinaryChar('(');
         st.ordinaryChar(')');
         st.ordinaryChar(',');
-        st.quoteChar('"');
+        st.ordinaryChar('"');
     }
 
     public String getString() {

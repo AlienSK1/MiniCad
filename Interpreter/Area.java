@@ -23,7 +23,7 @@ public class Area implements Expression{
             ris=o.area();
         }
         else if( subj instanceof TypeConstr){
-            java.util.List<GraphicObject> objs= GraphicObjectHolder.getInstance().getAllByType(subj.getClass().getTypeName());
+            java.util.List<GraphicObject> objs= GraphicObjectHolder.getInstance().getAllByType(subj.getClass().getSimpleName());
             for(GraphicObject o: objs){
                 ris+=o.area();
             }
@@ -34,6 +34,6 @@ public class Area implements Expression{
                 ris+=o.area();
             }
         }
-        return String.format("%lf",ris);
+        return String.format("%.2f",ris);
     }
 }

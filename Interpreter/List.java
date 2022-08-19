@@ -22,42 +22,60 @@ public class List implements Expression{
         if(subj instanceof Id){
             ris= GraphicObjectHolder.getInstance().getObject(Integer.parseInt(subj.interpret())).objectProperties();
         } else if (subj instanceof TypeConstr) {
-            java.util.List<GraphicObject> objs=GraphicObjectHolder.getInstance().getAllByType(subj.getClass().getTypeName());
-            StringBuilder sb = new StringBuilder();
-            Iterator<GraphicObject> it = objs.listIterator();
-            GraphicObject o = it.next();
-            while(it.hasNext()){
+            java.util.List<GraphicObject> objs=GraphicObjectHolder.getInstance().getAllByType(subj.getClass().getSimpleName());
+            if(!objs.isEmpty()){
+                StringBuilder sb = new StringBuilder();
+                Iterator<GraphicObject> it = objs.listIterator();
+                GraphicObject o = it.next();
+                while(it.hasNext()){
+                    sb.append(o.getId());
+                    sb.append(",");
+                    o=it.next();
+                }
                 sb.append(o.getId());
-                sb.append(",");
-                o=it.next();
+                ris=sb.toString();
             }
-            sb.append(o.getId());
-            ris=sb.toString();
+            else{
+                ris="Non ci sono oggetti di questo tipo";
+            }
+
         }
         else if(subj instanceof All){
             java.util.List<GraphicObject> objs=GraphicObjectHolder.getInstance().getAllObjects();
-            StringBuilder sb = new StringBuilder();
-            Iterator<GraphicObject> it = objs.listIterator();
-            GraphicObject o = it.next();
-            while(it.hasNext()){
+            objs.addAll(GraphicObjectHolder.getInstance().getAllGroups());
+            if(!objs.isEmpty()){
+                StringBuilder sb = new StringBuilder();
+                Iterator<GraphicObject> it = objs.listIterator();
+                GraphicObject o = it.next();
+                while(it.hasNext()){
+                    sb.append(o.getId());
+                    sb.append(",");
+                    o=it.next();
+                }
                 sb.append(o.getId());
-                sb.append(",");
-                o=it.next();
+                ris=sb.toString();
             }
-            sb.append(o.getId());
-            ris=sb.toString();
+            else{
+                ris="Non ci sono oggetti";
+            }
+
         } else if ( subj instanceof Groups) {
             java.util.List<is.shapes.model.Group> objs=GraphicObjectHolder.getInstance().getAllGroups();
-            StringBuilder sb = new StringBuilder();
-            Iterator<is.shapes.model.Group> it = objs.listIterator();
-            is.shapes.model.Group g = it.next();
-            while(it.hasNext()){
+            if(!objs.isEmpty()){
+                StringBuilder sb = new StringBuilder();
+                Iterator<is.shapes.model.Group> it = objs.listIterator();
+                is.shapes.model.Group g = it.next();
+                while(it.hasNext()){
+                    sb.append(g.getId());
+                    sb.append(",");
+                    g=it.next();
+                }
                 sb.append(g.getId());
-                sb.append(",");
-                g=it.next();
+                ris=sb.toString();
             }
-            sb.append(g.getId());
-            ris=sb.toString();
+            else{
+                ris= "Non ci sono gruppi";
+            }
         }
         return ris;
     }

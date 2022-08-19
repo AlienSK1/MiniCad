@@ -1,7 +1,6 @@
 package is.Interpreter.typeConstraint;
 
 import is.Interpreter.Expression;
-import is.Interpreter.typeConstraint.TypeConstr;
 
 public class Circle implements TypeConstr {
     private Expression radius;

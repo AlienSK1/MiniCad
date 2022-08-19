@@ -99,7 +99,7 @@ public class GraphicObjectHolder {
     public List<GraphicObject> getAllByType(String type){
         LinkedList<GraphicObject> ris = new LinkedList<>();
         for(GraphicObject o : objects){
-            if(o.getType().equals(type)){
+            if(o.getType().equalsIgnoreCase(type)){
                 ris.add(o);
             }
         }
@@ -113,7 +113,6 @@ public class GraphicObjectHolder {
                 ris= o;
             }
         }
-        if(ris==null){return ris;}
         for (GraphicObject o: groups){
             if(o.getId()==id) ris=o;
         }

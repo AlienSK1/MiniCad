@@ -23,7 +23,7 @@ public class Perimeter implements Expression{
             ris=o.perimeter();
         }
         else if( subj instanceof TypeConstr){
-            List<GraphicObject> objs= GraphicObjectHolder.getInstance().getAllByType(subj.getClass().getTypeName());
+            List<GraphicObject> objs= GraphicObjectHolder.getInstance().getAllByType(subj.getClass().getSimpleName());
             for(GraphicObject o: objs){
                 ris+=o.perimeter();
             }
@@ -34,6 +34,6 @@ public class Perimeter implements Expression{
                 ris+=o.perimeter();
             }
         }
-        return String.format("%lf",ris);
+        return String.format("%.2f",ris);
     }
 }

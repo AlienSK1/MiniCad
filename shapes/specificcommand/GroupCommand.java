@@ -4,6 +4,7 @@ import is.command.Command;
 import is.shapes.Singleton.GraphicObjectHolder;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.Group;
+import is.shapes.view.GraphicObjectPanel;
 
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
@@ -14,33 +15,41 @@ public class GroupCommand implements Command {
     private int id;
     private Group addedGroup;
 
+    private GraphicObjectPanel panel;
+
     public GroupCommand(List<GraphicObject> groupElements, int id){
         this.groupElements=new LinkedList<>();
         for(GraphicObject o : groupElements){
             this.groupElements.add(o);
         }
         this.id=id;
+        this.panel= GraphicObjectHolder.getInstance().getPanel();
     }
     @Override
     public boolean doIt() {
         for(GraphicObject o : groupElements){
             if(o instanceof Group){
                 GraphicObjectHolder.getInstance().removeGroup((Group) o);
+                panel.remove(o);
             }
             else{
                 GraphicObjectHolder.getInstance().removeObject(o);
+                panel.remove(o);
             }
         }
         addedGroup=new Group(id,new Point2D.Double(0,0),groupElements);
         GraphicObjectHolder.getInstance().addObject(addedGroup);
+        panel.add(addedGroup);
         return true;
     }
 
     @Override
     public boolean undoIt() {
         GraphicObjectHolder.getInstance().removeObject(addedGroup);
+        panel.remove(addedGroup);
         for(GraphicObject o: groupElements){
             GraphicObjectHolder.getInstance().addObject(o);
+            panel.add(o);
         }
         return true;
     }

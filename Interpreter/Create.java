@@ -3,8 +3,8 @@ package is.Interpreter;
 import is.Interpreter.typeConstraint.Circle;
 import is.Interpreter.typeConstraint.Img;
 import is.Interpreter.typeConstraint.Rectangle;
-import is.command.HistoryCommandHandler;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.TestGraphics;
 import is.shapes.model.CircleObject;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.ImageObject;
@@ -42,7 +42,7 @@ public class Create implements Expression{
         else if (typeConstr instanceof Img){
             String[] positionValues= pos.interpret().split(",");
             Point2D position=  new Point2D.Double(Double.parseDouble(positionValues[0]), Double.parseDouble(positionValues[1]));
-            ImageIcon image = new ImageIcon(typeConstr.interpret());
+            ImageIcon image = new ImageIcon(TestGraphics.class.getResource(typeConstr.interpret()));
             o= new ImageObject(image, position, id);
         }
         GraphicObjectHolder.getInstance().getHistory().handle(new NewObjectCmd(GraphicObjectHolder.getInstance().getPanel(),o));

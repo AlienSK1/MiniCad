@@ -12,6 +12,7 @@ public class RemoveCommand implements Command {
 
     public RemoveCommand(GraphicObject object){
         this.object=object;
+        this.panel= GraphicObjectHolder.getInstance().getPanel();
     }
 
     @Override

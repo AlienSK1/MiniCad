@@ -7,6 +7,9 @@ public class Id implements TerminalElement{
         this.id=Integer.parseInt(id);
     }
 
+    public String toString(){
+        return id+"";
+    }
     @Override
     public String interpret() {
         return String.format("%d",this.id);

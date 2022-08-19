@@ -1,11 +1,8 @@
 package is.Interpreter;
 
 import is.shapes.Singleton.GraphicObjectHolder;
-import is.shapes.model.GraphicObject;
 import is.shapes.model.Group;
 import is.shapes.specificcommand.UnGroupCommand;
-
-import java.util.List;
 
 public class Ungroup implements Expression{
     private Expression id;

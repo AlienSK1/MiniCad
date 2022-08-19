@@ -1,7 +1,5 @@
 package is.Interpreter.typeConstraint;
 
-import is.Interpreter.typeConstraint.TypeConstr;
-
 public class Img implements TypeConstr {
     private String path;
 

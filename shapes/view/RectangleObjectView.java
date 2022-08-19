@@ -15,6 +15,5 @@ public class RectangleObjectView implements GraphicObjectView {
 		double x = position.getX() - dim.getWidth() / 2.0;
 		double y = position.getY() - dim.getHeight() / 2.0;
 		g.draw(new Rectangle2D.Double(x, y, dim.getWidth(), dim.getHeight()));
-
 	}
 }

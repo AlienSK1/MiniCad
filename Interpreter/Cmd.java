@@ -1,7 +1,5 @@
 package is.Interpreter;
 
-import is.command.HistoryCommandHandler;
-
 public class Cmd implements Expression{
     private Expression command;
 
