@@ -18,6 +18,7 @@ public class AnalizzatoreLessicale {
         st.wordChars('0', '9');
         st.wordChars('.', '.');
         st.wordChars('/','/');
+        st.wordChars('_','_');
         st.whitespaceChars('\u0000', ' ');
         st.ordinaryChar('(');
         st.ordinaryChar(')');

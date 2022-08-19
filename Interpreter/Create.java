@@ -11,8 +11,11 @@ import is.shapes.model.ImageObject;
 import is.shapes.model.RectangleObject;
 import is.shapes.specificcommand.NewObjectCmd;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.IOException;
 
 public class Create implements Expression{
     private Expression typeConstr;
@@ -42,7 +45,12 @@ public class Create implements Expression{
         else if (typeConstr instanceof Img){
             String[] positionValues= pos.interpret().split(",");
             Point2D position=  new Point2D.Double(Double.parseDouble(positionValues[0]), Double.parseDouble(positionValues[1]));
-            ImageIcon image = new ImageIcon(TestGraphics.class.getResource(typeConstr.interpret()));
+            ImageIcon image = null;
+            try {
+                image = new ImageIcon(ImageIO.read(new File(typeConstr.interpret())));
+            } catch (IOException e) {
+                return "File non esistente";
+            }
             o= new ImageObject(image, position, id);
         }
         GraphicObjectHolder.getInstance().getHistory().handle(new NewObjectCmd(GraphicObjectHolder.getInstance().getPanel(),o));

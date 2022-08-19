@@ -41,7 +41,6 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 		revalidate();
 	}
 
-	
 	public GraphicObject getGraphicObjectAt(Point2D p) {
 		for (GraphicObject g : objects) {
 			if (g.contains(p))
