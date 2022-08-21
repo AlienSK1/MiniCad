@@ -2,6 +2,7 @@ package is.shapes.specificcommand;
 
 import is.command.Command;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.Group;
 import is.shapes.view.GraphicObjectPanel;
@@ -29,11 +30,19 @@ public class GroupCommand implements Command {
     public boolean doIt() {
         for(GraphicObject o : groupElements){
             if(o instanceof Group){
-                GraphicObjectHolder.getInstance().removeGroup((Group) o);
+                try {
+                    GraphicObjectHolder.getInstance().removeGroup((Group) o);
+                } catch (ObjectNotPresentException e) {
+                    throw new RuntimeException(e);
+                }
                 panel.remove(o);
             }
             else{
-                GraphicObjectHolder.getInstance().removeObject(o);
+                try {
+                    GraphicObjectHolder.getInstance().removeObject(o);
+                } catch (ObjectNotPresentException e) {
+                    throw new RuntimeException(e);
+                }
                 panel.remove(o);
             }
         }
@@ -45,7 +54,11 @@ public class GroupCommand implements Command {
 
     @Override
     public boolean undoIt() {
-        GraphicObjectHolder.getInstance().removeObject(addedGroup);
+        try {
+            GraphicObjectHolder.getInstance().removeObject(addedGroup);
+        } catch (ObjectNotPresentException e) {
+            throw new RuntimeException(e);
+        }
         panel.remove(addedGroup);
         for(GraphicObject o: groupElements){
             GraphicObjectHolder.getInstance().addObject(o);

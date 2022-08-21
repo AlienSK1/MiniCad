@@ -1,6 +1,7 @@
 package is.Interpreter;
 
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.specificcommand.RemoveCommand;
 
@@ -15,7 +16,12 @@ public class Remove implements Expression{
     public String interpret() {
         String ris=null;
         int objectId= Integer.parseInt(id.interpret());
-        GraphicObject o = GraphicObjectHolder.getInstance().getObject(objectId);
+        GraphicObject o = null;
+        try {
+            o = GraphicObjectHolder.getInstance().getObject(objectId);
+        } catch (ObjectNotPresentException e) {
+            throw new RuntimeException(e);
+        }
         GraphicObjectHolder.getInstance().getHistory().handle(new RemoveCommand(o));
         return ris;
     }

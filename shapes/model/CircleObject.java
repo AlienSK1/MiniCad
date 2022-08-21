@@ -82,4 +82,14 @@ public class CircleObject extends AbstractGraphicObject {
 	public double getRadius() {
 		return radius;
 	}
+
+	@Override
+	public boolean equals(Object o){
+		if(o==null) return false;
+		if(o==this) return true;
+		if(!(o instanceof CircleObject)) return false;
+		CircleObject c = (CircleObject) o;
+		return this.position.equals(c.position) && this.radius==c.radius;
+	}
+
 }

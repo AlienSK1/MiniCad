@@ -94,4 +94,13 @@ public class ImageObject extends AbstractGraphicObject {
 	public double area(){
 		return this.getDimension().getHeight()*this.getDimension().getWidth();
 	}
+
+	@Override
+	public boolean equals(Object o){
+		if(o==null) return false;
+		if(o==this) return true;
+		if(!(o instanceof ImageObject)) return false;
+		ImageObject i = (ImageObject) o;
+		return this.factor==i.factor && this.position.equals(i.position) && this.image.equals(i.image);
+	}
 }

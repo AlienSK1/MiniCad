@@ -56,19 +56,23 @@ public class GraphicObjectHolder {
         }
     }
 
-    public void removeGroup(Group g){
+    public void removeGroup(Group g) throws ObjectNotPresentException {
         if(groups.contains(g)){
             groups.remove(g);
         }
+        else throw new ObjectNotPresentException("Il gruppo non è presente");
     }
 
-    public void removeObject(GraphicObject o){
+    public void removeObject(GraphicObject o) throws ObjectNotPresentException {
+        boolean rimosso=false;
         if(objects.contains(o)){
             objects.remove(o);
+            rimosso=true;
         }
-        else if(groups.contains(o)){
+        else if(groups.contains(o) && !rimosso){
             Group g = (Group) o;
             groups.remove(o);
+            rimosso=true;
             for(GraphicObject obj : g.getObjects()){
                 if(obj.getType().equals("Group")){
                     groups.add((Group) obj);
@@ -78,6 +82,7 @@ public class GraphicObjectHolder {
                 }
             }
         }
+        if(!rimosso) throw new ObjectNotPresentException("L'ogetto non è presente");
     }
 
     public List<GraphicObject> getAllObjects(){
@@ -97,6 +102,7 @@ public class GraphicObjectHolder {
     }
 
     public List<GraphicObject> getAllByType(String type){
+        if(!(type.equals("Group") || type.equals("Circle")|| type.equals("Rectangle") || type.equals("Image"))) throw new RuntimeException("Passato come parametro un tipo non gestito");
         LinkedList<GraphicObject> ris = new LinkedList<>();
         for(GraphicObject o : objects){
             if(o.getType().equalsIgnoreCase(type)){
@@ -106,7 +112,7 @@ public class GraphicObjectHolder {
         return ris;
     }
 
-    public GraphicObject getObject(int id){
+    public GraphicObject getObject(int id) throws ObjectNotPresentException {
         GraphicObject ris = null;
         for(GraphicObject o : objects){
             if(o.getId()==id){
@@ -116,6 +122,7 @@ public class GraphicObjectHolder {
         for (GraphicObject o: groups){
             if(o.getId()==id) ris=o;
         }
+        if(ris==null) throw new ObjectNotPresentException("L'oggetto cercato non è memorizzato");
         return ris;
     }
 }

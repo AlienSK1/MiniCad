@@ -5,6 +5,7 @@ import is.Interpreter.NonTerminalExpressions.Groups;
 import is.Interpreter.TerminalElement.Id;
 import is.Interpreter.typeConstraint.TypeConstr;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 
 import java.util.Iterator;
@@ -20,7 +21,11 @@ public class List implements Expression{
     public String interpret() {
         String ris=null;
         if(subj instanceof Id){
-            ris= GraphicObjectHolder.getInstance().getObject(Integer.parseInt(subj.interpret())).objectProperties();
+            try {
+                ris= GraphicObjectHolder.getInstance().getObject(Integer.parseInt(subj.interpret())).objectProperties();
+            } catch (ObjectNotPresentException e) {
+                throw new RuntimeException(e);
+            }
         } else if (subj instanceof TypeConstr) {
             java.util.List<GraphicObject> objs=GraphicObjectHolder.getInstance().getAllByType(subj.getClass().getSimpleName());
             if(!objs.isEmpty()){

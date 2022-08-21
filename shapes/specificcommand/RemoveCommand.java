@@ -2,6 +2,7 @@ package is.shapes.specificcommand;
 
 import is.command.Command;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.Group;
 import is.shapes.view.GraphicObjectPanel;
@@ -18,10 +19,18 @@ public class RemoveCommand implements Command {
     @Override
     public boolean doIt() {
         if(object instanceof Group){
-            GraphicObjectHolder.getInstance().removeGroup((Group) object);
+            try {
+                GraphicObjectHolder.getInstance().removeGroup((Group) object);
+            } catch (ObjectNotPresentException e) {
+                throw new RuntimeException(e);
+            }
         }
         else {
-            GraphicObjectHolder.getInstance().removeObject(object);
+            try {
+                GraphicObjectHolder.getInstance().removeObject(object);
+            } catch (ObjectNotPresentException e) {
+                throw new RuntimeException(e);
+            }
         }
         panel.remove(object);
         return true;

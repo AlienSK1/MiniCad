@@ -1,6 +1,7 @@
 package is.Interpreter;
 
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.specificcommand.GroupCommand;
 
@@ -21,7 +22,11 @@ public class Group implements Expression {
         List<GraphicObject> elem= new LinkedList<>();
         for(String o : objs){
             System.out.println(o);
-            elem.add(GraphicObjectHolder.getInstance().getObject(Integer.parseInt(o.trim())));
+            try {
+                elem.add(GraphicObjectHolder.getInstance().getObject(Integer.parseInt(o.trim())));
+            } catch (ObjectNotPresentException e) {
+                throw new RuntimeException(e);
+            }
         }
         GraphicObjectHolder.getInstance().getHistory().handle(new GroupCommand(elem,id));
         return ris;

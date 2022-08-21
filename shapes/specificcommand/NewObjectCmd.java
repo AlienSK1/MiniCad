@@ -2,6 +2,7 @@ package is.shapes.specificcommand;
 
 import is.command.Command;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.view.GraphicObjectPanel;
 
@@ -26,7 +27,11 @@ public class NewObjectCmd implements Command {
 	@Override
 	public boolean undoIt() {
 		panel.remove(go);
-		GraphicObjectHolder.getInstance().removeObject(go);
+		try {
+			GraphicObjectHolder.getInstance().removeObject(go);
+		} catch (ObjectNotPresentException e) {
+			throw new RuntimeException(e);
+		}
 		return true;
 	}
 

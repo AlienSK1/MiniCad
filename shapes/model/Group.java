@@ -104,4 +104,14 @@ public class Group extends AbstractGraphicObject{
         }
         return ris;
     }
+
+
+    @Override
+    public boolean equals(Object o){
+        if(o==null) return false;
+        if(o==this) return true;
+        if(!(o instanceof Group)) return false;
+        Group g = (Group) o;
+        return this.groupElement.equals(g.groupElement);
+    }
 }

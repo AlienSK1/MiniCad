@@ -1,6 +1,7 @@
 package is.Interpreter;
 
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.specificcommand.MoveCommand;
 
@@ -21,7 +22,12 @@ public class Move implements Expression{
     public String interpret() {
         String ris=null;
         int objid= Integer.parseInt(id.interpret());
-        GraphicObject o= GraphicObjectHolder.getInstance().getObject(objid);
+        GraphicObject o= null;
+        try {
+            o = GraphicObjectHolder.getInstance().getObject(objid);
+        } catch (ObjectNotPresentException e) {
+            throw new RuntimeException(e);
+        }
         String[] positionValues= pos.interpret().split(",");
         Point2D position;
         if(isOffset){

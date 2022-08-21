@@ -2,6 +2,7 @@ package is.shapes.specificcommand;
 
 import is.command.Command;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.Group;
 
@@ -15,7 +16,11 @@ public class UnGroupCommand implements Command {
     }
     @Override
     public boolean doIt() {
-        GraphicObjectHolder.getInstance().removeObject(group);
+        try {
+            GraphicObjectHolder.getInstance().removeObject(group);
+        } catch (ObjectNotPresentException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 
@@ -24,10 +29,18 @@ public class UnGroupCommand implements Command {
         List<GraphicObject> elements= group.getObjects();
         for(GraphicObject o:elements){
             if(o instanceof Group){
-                GraphicObjectHolder.getInstance().removeGroup((Group) o);
+                try {
+                    GraphicObjectHolder.getInstance().removeGroup((Group) o);
+                } catch (ObjectNotPresentException e) {
+                    throw new RuntimeException(e);
+                }
             }
             else {
-                GraphicObjectHolder.getInstance().removeObject(o);
+                try {
+                    GraphicObjectHolder.getInstance().removeObject(o);
+                } catch (ObjectNotPresentException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         GraphicObjectHolder.getInstance().addObject(group);

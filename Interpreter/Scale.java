@@ -1,6 +1,7 @@
 package is.Interpreter;
 
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 import is.shapes.specificcommand.ZoomCommand;
 
@@ -16,7 +17,12 @@ public class Scale implements Expression{
     @Override
     public String interpret() {
         String ris=null;
-        GraphicObject o = GraphicObjectHolder.getInstance().getObject(Integer.parseInt(id.interpret()));
+        GraphicObject o = null;
+        try {
+            o = GraphicObjectHolder.getInstance().getObject(Integer.parseInt(id.interpret()));
+        } catch (ObjectNotPresentException e) {
+            throw new RuntimeException(e);
+        }
         GraphicObjectHolder.getInstance().getHistory().handle(new ZoomCommand(o,Double.parseDouble(posfloat.interpret())));
         return ris;
     }

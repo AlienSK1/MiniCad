@@ -1,6 +1,7 @@
 package is.Interpreter;
 
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.Group;
 import is.shapes.specificcommand.UnGroupCommand;
 
@@ -14,7 +15,12 @@ public class Ungroup implements Expression{
     @Override
     public String interpret() {
         String ris=null;
-        Group g =(Group) GraphicObjectHolder.getInstance().getObject(Integer.parseInt(id.interpret()));
+        Group g = null;
+        try {
+            g = (Group) GraphicObjectHolder.getInstance().getObject(Integer.parseInt(id.interpret()));
+        } catch (ObjectNotPresentException e) {
+            throw new RuntimeException(e);
+        }
         GraphicObjectHolder.getInstance().getHistory().handle(new UnGroupCommand(g));
         return null;
     }

@@ -4,6 +4,7 @@ import is.Interpreter.NonTerminalExpressions.All;
 import is.Interpreter.TerminalElement.Id;
 import is.Interpreter.typeConstraint.TypeConstr;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.Singleton.ObjectNotPresentException;
 import is.shapes.model.GraphicObject;
 
 import java.util.List;
@@ -19,7 +20,12 @@ public class Area implements Expression{
     public String interpret() {
         double ris=0;
         if(subj instanceof Id){
-            GraphicObject o = GraphicObjectHolder.getInstance().getObject(Integer.parseInt(subj.interpret()));
+            GraphicObject o = null;
+            try {
+                o = GraphicObjectHolder.getInstance().getObject(Integer.parseInt(subj.interpret()));
+            } catch (ObjectNotPresentException e) {
+                throw new RuntimeException(e);
+            }
             ris=o.area();
         }
         else if( subj instanceof TypeConstr){

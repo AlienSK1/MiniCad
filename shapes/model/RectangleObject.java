@@ -86,4 +86,13 @@ public class RectangleObject extends AbstractGraphicObject {
 	public double area(){
 		return this.dim.getHeight()*this.dim.getWidth();
 	}
+
+	@Override
+	public boolean equals(Object o){
+		if(o==null) return false;
+		if(o==this) return true;
+		if(!(o instanceof RectangleObject)) return false;
+		RectangleObject r = (RectangleObject) o;
+		return this.dim.equals(r.dim) && this.position.equals(r.position);
+	}
 }
