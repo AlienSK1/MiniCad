@@ -18,4 +18,13 @@ public class Ungroup implements Expression{
         GraphicObjectHolder.getInstance().getHistory().handle(new UnGroupCommand(g));
         return null;
     }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof Ungroup)) return false;
+        Ungroup ug= (Ungroup) e;
+        return this.id.equals(ug.id);
+    }
 }

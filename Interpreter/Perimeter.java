@@ -36,4 +36,14 @@ public class Perimeter implements Expression{
         }
         return String.format("%.2f",ris);
     }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof Perimeter)) return false;
+        Perimeter p = (Perimeter) e;
+        return this.subj.equals(p.subj);
+    }
+
 }

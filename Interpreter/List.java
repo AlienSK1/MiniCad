@@ -79,4 +79,17 @@ public class List implements Expression{
         }
         return ris;
     }
+
+    @Override
+    public boolean equals(Object e) {
+
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof List)) return false;
+        List l = (List) e;
+        if(this.subj instanceof Id){
+            return this.subj.equals(l.subj);
+        }
+        return this.subj.getClass()==l.subj.getClass();
+    }
 }

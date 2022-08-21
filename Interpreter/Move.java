@@ -33,4 +33,15 @@ public class Move implements Expression{
         GraphicObjectHolder.getInstance().getHistory().handle(new MoveCommand(o,position));
         return ris;
     }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof Move)) return false;
+        Move m = (Move) e;
+        return this.isOffset==m.isOffset && this.pos.equals(this.pos) && this.id.equals(m.id);
+    }
+
+
 }

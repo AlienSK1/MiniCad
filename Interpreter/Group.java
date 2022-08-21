@@ -13,7 +13,6 @@ public class Group implements Expression {
     public Group(Expression idList){
         this.idList=idList;
     }
-
     @Override
     public String interpret() {
         String ris=null;
@@ -26,5 +25,14 @@ public class Group implements Expression {
         }
         GraphicObjectHolder.getInstance().getHistory().handle(new GroupCommand(elem,id));
         return ris;
+    }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof Move)) return false;
+        Group g = (Group) e;
+        return this.idList.equals(g.idList);
     }
 }

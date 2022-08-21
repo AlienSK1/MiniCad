@@ -19,4 +19,13 @@ public class Remove implements Expression{
         GraphicObjectHolder.getInstance().getHistory().handle(new RemoveCommand(o));
         return ris;
     }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof Remove)) return false;
+        Remove r = (Remove) e;
+        return this.id.equals(r.id);
+    }
 }

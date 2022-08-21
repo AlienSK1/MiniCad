@@ -4,7 +4,6 @@ import is.Interpreter.typeConstraint.Circle;
 import is.Interpreter.typeConstraint.Img;
 import is.Interpreter.typeConstraint.Rectangle;
 import is.shapes.Singleton.GraphicObjectHolder;
-import is.shapes.TestGraphics;
 import is.shapes.model.CircleObject;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.ImageObject;
@@ -25,7 +24,6 @@ public class Create implements Expression{
         this.pos=pos;
         this.typeConstr=typeConstr;
     }
-
     @Override
     public String interpret() {
         int id =GraphicObjectHolder.getInstance().nextId();
@@ -55,5 +53,14 @@ public class Create implements Expression{
         }
         GraphicObjectHolder.getInstance().getHistory().handle(new NewObjectCmd(GraphicObjectHolder.getInstance().getPanel(),o));
         return String.format("%d",id);
+    }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof Create)) return false;
+        Create c = (Create) e;
+        return this.typeConstr.equals(c.typeConstr) && this.pos.equals(c.pos);
     }
 }

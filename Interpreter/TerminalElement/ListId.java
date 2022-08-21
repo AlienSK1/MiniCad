@@ -29,4 +29,14 @@ public class ListId implements TerminalElement{
         sb.append(e);
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof ListId)) return false;
+        ListId li= (ListId) e;
+        return this.ids.equals(li.ids);
+
+    }
 }

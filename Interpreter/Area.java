@@ -36,4 +36,13 @@ public class Area implements Expression{
         }
         return String.format("%.2f",ris);
     }
+
+    @Override
+    public boolean equals(Object e) {
+        if(e==null) return false;
+        if(e==this) return true;
+        if(!(e instanceof Area)) return false;
+        Area a = (Area) e;
+        return this.subj.equals(a.subj);
+    }
 }

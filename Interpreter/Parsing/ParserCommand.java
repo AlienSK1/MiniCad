@@ -217,8 +217,6 @@ public class ParserCommand {
 
     private void atteso(Simbolo s) {
         simbolo = lexer.nextSimbolo();
-        System.out.println(simbolo+" "+s);
-        System.out.println(lexer.getString());
         if (simbolo != s) {
             String msg = " trovato " + simbolo + " mentre si attendeva " + s;
             throw new SyntaxException(msg);
