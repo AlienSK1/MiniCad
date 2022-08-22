@@ -11,7 +11,6 @@ public class ZoomCommand implements Command {
 	public ZoomCommand(GraphicObject obj, double factor) {
 		object = obj;
 		this.factor = factor;
-		
 	}
 
 	@Override
