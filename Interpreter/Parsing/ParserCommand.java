@@ -5,8 +5,9 @@ import is.Interpreter.NonTerminalExpressions.All;
 import is.Interpreter.NonTerminalExpressions.Groups;
 import is.Interpreter.TerminalElement.Floating;
 import is.Interpreter.TerminalElement.Id;
-import is.Interpreter.TerminalElement.ListId;
-import is.Interpreter.TerminalElement.Pos;
+import is.Interpreter.NonTerminalExpressions.ListId;
+import is.Interpreter.NonTerminalExpressions.Pos;
+import is.Interpreter.TerminalElement.Path;
 import is.Interpreter.typeConstraint.Circle;
 import is.Interpreter.typeConstraint.Img;
 import is.Interpreter.typeConstraint.Rectangle;
@@ -88,8 +89,8 @@ public class ParserCommand {
                 ris= new Rectangle(dim);
                 break;
             case IMAGE:
-                String path= path();
-                ris= new Img(path);
+                Expression path= path();
+                ris= new Img(path.interpret());
                 break;
             default: throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un tipo");
         }
@@ -126,11 +127,11 @@ public class ParserCommand {
         return new Pos(leftValue,rightValue);
     }
 
-    private String path(){
+    private Expression path(){
         atteso(Simbolo.TONDA_APERTA);
         atteso(Simbolo.STRINGA_QUOTATA);
         atteso(Simbolo.PAROLA);
-        String path= lexer.getString();
+        Path path= new Path(lexer.getString());
         atteso(Simbolo.STRINGA_QUOTATA);
         atteso(Simbolo.TONDA_CHIUSA);
         return path;

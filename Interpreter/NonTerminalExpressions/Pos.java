@@ -1,4 +1,4 @@
-package is.Interpreter.TerminalElement;
+package is.Interpreter.NonTerminalExpressions;
 
 import is.Interpreter.Expression;
 

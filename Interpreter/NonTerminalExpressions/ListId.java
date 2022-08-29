@@ -1,13 +1,16 @@
-package is.Interpreter.TerminalElement;
+package is.Interpreter.NonTerminalExpressions;
+
+import is.Interpreter.Expression;
+import is.Interpreter.TerminalElement.Id;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ListId implements TerminalElement{
-    List<Id> ids;
+public class ListId implements Expression{
+    List<Expression> ids;
 
-    public ListId(Id id){
+    public ListId(Expression id){
         this.ids= new LinkedList<>();
         this.ids.add(id);
     }
@@ -19,8 +22,8 @@ public class ListId implements TerminalElement{
     @Override
     public String interpret() {
         StringBuilder sb = new StringBuilder();
-        Iterator<Id> it = ids.listIterator();
-        Id e = it.next();
+        Iterator<Expression> it = ids.listIterator();
+        Expression e = it.next();
         while(it.hasNext()){
             sb.append(e.interpret());
             sb.append(",");
