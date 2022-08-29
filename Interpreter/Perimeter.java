@@ -1,7 +1,7 @@
 package is.Interpreter;
 
 import is.Interpreter.NonTerminalExpressions.All;
-import is.Interpreter.TerminalElement.Id;
+import is.Interpreter.TerminalExpression.Id;
 import is.Interpreter.typeConstraint.TypeConstr;
 import is.shapes.Singleton.GraphicObjectHolder;
 import is.shapes.Singleton.ObjectNotPresentException;

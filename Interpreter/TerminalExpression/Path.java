@@ -1,6 +1,6 @@
-package is.Interpreter.TerminalElement;
+package is.Interpreter.TerminalExpression;
 
-public class Path implements TerminalElement{
+public class Path implements TerminalExpression {
     private String path;
 
     public Path(String path){

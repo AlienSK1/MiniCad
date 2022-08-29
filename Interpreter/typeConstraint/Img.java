@@ -1,15 +1,17 @@
 package is.Interpreter.typeConstraint;
 
-public class Img implements TypeConstr {
-    private String path;
+import is.Interpreter.Expression;
 
-    public Img(String path){
+public class Img implements TypeConstr {
+    private Expression path;
+
+    public Img(Expression path){
         this.path=path;
     }
 
     @Override
     public String interpret() {
-        return this.path;
+        return this.path.interpret();
     }
 
     @Override

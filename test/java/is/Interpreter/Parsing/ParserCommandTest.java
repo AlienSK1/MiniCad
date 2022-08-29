@@ -2,7 +2,7 @@ package is.Interpreter.Parsing;
 
 import is.Interpreter.Cmd;
 import is.Interpreter.Create;
-import is.Interpreter.TerminalElement.Floating;
+import is.Interpreter.TerminalExpression.Floating;
 import is.Interpreter.NonTerminalExpressions.Pos;
 import is.Interpreter.typeConstraint.Circle;
 import org.junit.jupiter.api.BeforeAll;

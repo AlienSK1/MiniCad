@@ -1,8 +1,8 @@
-package is.Interpreter.TerminalElement;
+package is.Interpreter.TerminalExpression;
 
 import is.Interpreter.typeConstraint.Circle;
 
-public class Id implements TerminalElement{
+public class Id implements TerminalExpression {
     private int id;
 
     public Id(String id){

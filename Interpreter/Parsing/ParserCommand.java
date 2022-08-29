@@ -3,11 +3,11 @@ package is.Interpreter.Parsing;
 import is.Interpreter.*;
 import is.Interpreter.NonTerminalExpressions.All;
 import is.Interpreter.NonTerminalExpressions.Groups;
-import is.Interpreter.TerminalElement.Floating;
-import is.Interpreter.TerminalElement.Id;
+import is.Interpreter.TerminalExpression.Floating;
+import is.Interpreter.TerminalExpression.Id;
 import is.Interpreter.NonTerminalExpressions.ListId;
 import is.Interpreter.NonTerminalExpressions.Pos;
-import is.Interpreter.TerminalElement.Path;
+import is.Interpreter.TerminalExpression.Path;
 import is.Interpreter.typeConstraint.Circle;
 import is.Interpreter.typeConstraint.Img;
 import is.Interpreter.typeConstraint.Rectangle;
@@ -90,7 +90,7 @@ public class ParserCommand {
                 break;
             case IMAGE:
                 Expression path= path();
-                ris= new Img(path.interpret());
+                ris= new Img(path);
                 break;
             default: throw new SyntaxException("trovato "+simbolo+" mentre si attendeva un tipo");
         }
@@ -175,7 +175,7 @@ public class ParserCommand {
                 ris= new Rectangle(new Pos(new Floating("0"), new Floating("0")));
                 break;
             case IMAGE:
-                ris = new Img("");
+                ris = new Img(new Path(""));
                 break;
             case ALL:
                 ris= new All();

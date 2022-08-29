@@ -1,8 +1,6 @@
-package is.Interpreter.TerminalElement;
+package is.Interpreter.TerminalExpression;
 
-import is.Interpreter.typeConstraint.Circle;
-
-public class Floating implements TerminalElement{
+public class Floating implements TerminalExpression {
     private double number;
     public Floating(String floating){
         this.number= Double.parseDouble(floating);

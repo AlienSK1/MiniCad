@@ -1,7 +1,7 @@
 package is.Interpreter.NonTerminalExpressions;
 
 import is.Interpreter.Expression;
-import is.Interpreter.TerminalElement.Id;
+import is.Interpreter.TerminalExpression.Id;
 
 import java.util.Iterator;
 import java.util.LinkedList;
