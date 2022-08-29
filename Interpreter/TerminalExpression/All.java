@@ -1,6 +1,8 @@
-package is.Interpreter.NonTerminalExpressions;
+package is.Interpreter.TerminalExpression;
 
-public class All implements NonTerminalExpression{
+import is.Interpreter.NonTerminalExpressions.NonTerminalExpression;
+
+public class All implements TerminalExpression {
 
     public All(){}
 

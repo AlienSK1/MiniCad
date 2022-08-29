@@ -1,8 +1,8 @@
 package is.Interpreter.Parsing;
 
 import is.Interpreter.*;
-import is.Interpreter.NonTerminalExpressions.All;
-import is.Interpreter.NonTerminalExpressions.Groups;
+import is.Interpreter.TerminalExpression.All;
+import is.Interpreter.TerminalExpression.Groups;
 import is.Interpreter.TerminalExpression.Floating;
 import is.Interpreter.TerminalExpression.Id;
 import is.Interpreter.NonTerminalExpressions.ListId;

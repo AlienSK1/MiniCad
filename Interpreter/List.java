@@ -1,7 +1,7 @@
 package is.Interpreter;
 
-import is.Interpreter.NonTerminalExpressions.All;
-import is.Interpreter.NonTerminalExpressions.Groups;
+import is.Interpreter.TerminalExpression.All;
+import is.Interpreter.TerminalExpression.Groups;
 import is.Interpreter.TerminalExpression.Id;
 import is.Interpreter.typeConstraint.TypeConstr;
 import is.shapes.Singleton.GraphicObjectHolder;

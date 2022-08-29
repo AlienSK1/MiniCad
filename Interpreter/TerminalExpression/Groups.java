@@ -1,6 +1,8 @@
-package is.Interpreter.NonTerminalExpressions;
+package is.Interpreter.TerminalExpression;
 
-public class Groups implements  NonTerminalExpression{
+import is.Interpreter.NonTerminalExpressions.NonTerminalExpression;
+
+public class Groups implements TerminalExpression {
     public Groups(){}
     @Override
     public String interpret() {
