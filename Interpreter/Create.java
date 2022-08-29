@@ -19,7 +19,6 @@ import java.io.IOException;
 public class Create implements Expression{
     private Expression typeConstr;
     private Expression pos;
-
     public Create(Expression typeConstr, Expression pos){
         this.pos=pos;
         this.typeConstr=typeConstr;
