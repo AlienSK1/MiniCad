@@ -19,7 +19,6 @@ public abstract class AbstractGraphicObject implements GraphicObject, Cloneable 
 		if (listeners.contains(l))
 			return;
 		listeners.add(l);
-
 	}
 
 	@Override
@@ -37,7 +36,6 @@ public abstract class AbstractGraphicObject implements GraphicObject, Cloneable 
 	@Override
 	public void moveTo(double x, double y) {
 		moveTo(new Point2D.Double(x, y));
-
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import is.Interpreter.Cmd;
 import is.Interpreter.Parsing.ParserCommand;
 import is.command.HistoryCommandHandler;
 import is.shapes.Singleton.GraphicObjectHolder;
+import is.shapes.controller.GraphicObjectController;
 import is.shapes.model.CircleObject;
 import is.shapes.model.Group;
 import is.shapes.model.ImageObject;
@@ -12,6 +13,8 @@ import is.shapes.view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -38,16 +41,34 @@ public class TestGraphics {
 
         TextField field= new TextField();
         field.addActionListener(evt->{
-            System.out.println(field.getText());
             Reader in = new StringReader(field.getText());
-            Cmd cmd =new ParserCommand(in).getCommand();
-            field.setText(cmd.interpret());
+            try{
+                Cmd cmd =new ParserCommand(in).getCommand();
+                JOptionPane.showMessageDialog(frame,cmd.interpret());
+            }
+            catch(RuntimeException e){
+                JOptionPane.showMessageDialog(frame,e.getMessage());
+            }
+            field.setText("");
         });
         field.setText("Inserisci comando");
 
+        GraphicObjectController goc = new GraphicObjectController(handler);
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                goc.setControlledObject(panel.getGraphicObjectAt(e.getPoint()));
+            }
+        });
+
+        JPanel controlPanel = new JPanel(new BorderLayout());
+        controlPanel.add(field, BorderLayout.NORTH);
+        controlPanel.add(goc,BorderLayout.SOUTH);
+
+
         frame.add(toolbar, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.CENTER);
-        frame.add(field, BorderLayout.SOUTH);
+        frame.add(controlPanel, BorderLayout.SOUTH);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

@@ -20,9 +20,12 @@ public class Group extends AbstractGraphicObject{
 
     @Override
     public void moveTo(Point2D p) {
-        position.setLocation(p);
+        Point2D oldPos = position;
+        position = p;
+        double diffX= p.getX()-oldPos.getX();
+        double diffY=p.getY()-oldPos.getY();
         for(GraphicObject o: groupElement){
-            o.moveTo(p);
+            o.moveTo(o.getPosition().getX()+diffX, o.getPosition().getY()+diffY);
         }
         notifyListeners(new GraphicEvent(this));
     }
