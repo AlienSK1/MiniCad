@@ -29,8 +29,6 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 
 	private List<GraphicObject> objects = new LinkedList<>();
 
-	private Map<Class<? extends GraphicObject>, GraphicObjectView> viewMap = new HashMap<>();
-
 	public GraphicObjectPanel() {
 		setBackground(Color.WHITE);
 	}
@@ -72,7 +70,7 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 
 		Graphics2D g2 = (Graphics2D) g;
 		for (GraphicObject go : objects) {
-			GraphicObjectView view = viewMap.get(go.getClass());
+			GraphicObjectView view = GraphicObjeectViewFactory.FACTORY.createView(go);
 			view.drawGraphicObject(go, g2);
 		}
 	}
@@ -91,7 +89,4 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 
 	}
 
-	public void installView(Class<? extends GraphicObject> clazz, GraphicObjectView view) {
-		viewMap.put(clazz, view);
-	}
 }

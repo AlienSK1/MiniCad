@@ -34,10 +34,10 @@ public class TestGraphics {
 
         GraphicObjectPanel panel = GraphicObjectHolder.getInstance().getPanel();
         panel.setPreferredSize(new Dimension(800, 600));
-        panel.installView(RectangleObject.class, new RectangleObjectView());
-        panel.installView(CircleObject.class, new CircleObjectView());
-        panel.installView(ImageObject.class, new ImageObjectView());
-        panel.installView(Group.class, new GroupObjectView());
+        GraphicObjeectViewFactory.FACTORY.installView(RectangleObject.class,new RectangleObjectView());
+        GraphicObjeectViewFactory.FACTORY.installView(CircleObject.class,new CircleObjectView());
+        GraphicObjeectViewFactory.FACTORY.installView(ImageObject.class,new ImageObjectView());
+        GraphicObjeectViewFactory.FACTORY.installView(Group.class,new GroupObjectView());
 
         TextField field= new TextField();
         field.addActionListener(evt->{
