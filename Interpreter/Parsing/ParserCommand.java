@@ -23,6 +23,7 @@ public class ParserCommand {
     public ParserCommand(Reader in){
         this.lexer=new AnalizzatoreLessicale(in);
         this.command=command();
+        atteso(Simbolo.EOF);
     }
 
     private Cmd command(){
