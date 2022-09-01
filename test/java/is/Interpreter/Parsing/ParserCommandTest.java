@@ -27,44 +27,36 @@ class ParserCommandTest {
         correctCommand= new LinkedList<>();
         correctCommand.add("new circle (29) (299,299)");
         correctCommand.add("new img (\"/home/fabrizio/Scaricati/Save_webP/pippo.png\") (200,200)");
+        correctCommand.add("mv 0 (100,100)");
+        correctCommand.add("mvoff 1 (100,100)");
+        correctCommand.add("grp 0,1");
+        correctCommand.add("ungrp 2");
         correctCommand.add("ls all");
         correctCommand.add("perimeter circle");
+        correctCommand.add("area all");
+        correctCommand.add("scale 1 2.5");
         correctCommand.add("del 0");
         wrongCommand= new LinkedList<>();
         wrongCommand.add("(.../");
-        wrongCommand.add("del 0");
+        wrongCommand.add("new circle (100) (29,29) mv 0");
         wrongCommand.add("new square (100) (20,20)");
-        wrongCommand.add("move 0 (200,200)");
+        wrongCommand.add("mv 0 (200,200)");
         wrongCommand.add("");
         wrongCommand.add("list circle");
-    }
-    @Test
-    public void CorrectParsing(){
-        String command= "new circle (29) (299,299)";
-        ParserCommand parser= new ParserCommand(new StringReader(command));
-        Cmd atteso = new Cmd(new Create(new Circle(new Floating("29")),new Pos(new Floating("299"), new Floating("299"))));
-        assertEquals( atteso, parser.getCommand());
+        wrongCommand.add("del 0");
     }
 
-    @Test
-    public void WrongParsing(){
-        String command="mv img (200,200) ()))";
-        assertThrows(SyntaxException.class,()->{ new ParserCommand(new StringReader(command));});
-    }
-
-    @RepeatedTest(5)
+    @RepeatedTest(11)
     public void CommandExecutionWorks(RepetitionInfo info){
         String command= correctCommand.get(info.getCurrentRepetition()-1);
         ParserCommand parser = new ParserCommand(new StringReader(command));
         assertDoesNotThrow(()->parser.getCommand().interpret());
     }
 
-    @RepeatedTest(5)
+    @RepeatedTest(6)
     public void CommandExecutionFail(RepetitionInfo info){
         String command = wrongCommand.get(info.getCurrentRepetition()-1);
-        ParserCommand parser = new ParserCommand(new StringReader(command));
-        assertThrows(Exception.class,()-> parser.getCommand().interpret());
+        assertThrows("Operazione fallita.",Exception.class,()-> new ParserCommand(new StringReader(command)).getCommand().interpret());
     }
-
 
 }
