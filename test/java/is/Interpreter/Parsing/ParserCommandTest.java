@@ -38,7 +38,7 @@ class ParserCommandTest {
     }
 
     @RepeatedTest(17)
-    public void CommandExecutionWorks(RepetitionInfo info){
+    public void CommandExecution(RepetitionInfo info){
 
         String command= commands.get(info.getCurrentRepetition()-1);
         if(info.getCurrentRepetition()<12){
