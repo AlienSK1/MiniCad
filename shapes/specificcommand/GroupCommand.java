@@ -29,22 +29,12 @@ public class GroupCommand implements Command {
     @Override
     public boolean doIt() {
         for(GraphicObject o : groupElements){
-            if(o instanceof Group){
-                try {
-                    GraphicObjectHolder.getInstance().removeGroup((Group) o);
-                } catch (ObjectNotPresentException e) {
-                    throw new RuntimeException(e);
-                }
-                panel.remove(o);
+            try {
+                GraphicObjectHolder.getInstance().removeObject(o);
+            } catch (ObjectNotPresentException e) {
+                throw new RuntimeException(e);
             }
-            else{
-                try {
-                    GraphicObjectHolder.getInstance().removeObject(o);
-                } catch (ObjectNotPresentException e) {
-                    throw new RuntimeException(e);
-                }
-                panel.remove(o);
-            }
+            panel.remove(o);
         }
         addedGroup=new Group(id,new Point2D.Double(0,0),groupElements);
         GraphicObjectHolder.getInstance().addObject(addedGroup);

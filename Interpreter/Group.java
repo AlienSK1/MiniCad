@@ -21,7 +21,6 @@ public class Group implements Expression {
         int id = GraphicObjectHolder.getInstance().nextId();
         List<GraphicObject> elem= new LinkedList<>();
         for(String o : objs){
-            System.out.println(o);
             try {
                 elem.add(GraphicObjectHolder.getInstance().getObject(Integer.parseInt(o.trim())));
             } catch (ObjectNotPresentException e) {

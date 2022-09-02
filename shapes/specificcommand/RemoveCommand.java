@@ -18,19 +18,10 @@ public class RemoveCommand implements Command {
 
     @Override
     public boolean doIt() {
-        if(object instanceof Group){
-            try {
-                GraphicObjectHolder.getInstance().removeGroup((Group) object);
-            } catch (ObjectNotPresentException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        else {
-            try {
-                GraphicObjectHolder.getInstance().removeObject(object);
-            } catch (ObjectNotPresentException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            GraphicObjectHolder.getInstance().removeObject(object);
+        } catch (ObjectNotPresentException e) {
+            throw new RuntimeException(e);
         }
         panel.remove(object);
         return true;

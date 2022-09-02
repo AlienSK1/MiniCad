@@ -17,7 +17,7 @@ public class UnGroupCommand implements Command {
     @Override
     public boolean doIt() {
         try {
-            GraphicObjectHolder.getInstance().removeObject(group);
+            GraphicObjectHolder.getInstance().removeGroup(group);
         } catch (ObjectNotPresentException e) {
             throw new RuntimeException(e);
         }
@@ -28,21 +28,13 @@ public class UnGroupCommand implements Command {
     public boolean undoIt() {
         List<GraphicObject> elements= group.getObjects();
         for(GraphicObject o:elements){
-            if(o instanceof Group){
-                try {
-                    GraphicObjectHolder.getInstance().removeGroup((Group) o);
-                } catch (ObjectNotPresentException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else {
-                try {
-                    GraphicObjectHolder.getInstance().removeObject(o);
-                } catch (ObjectNotPresentException e) {
-                    throw new RuntimeException(e);
-                }
+            try {
+                GraphicObjectHolder.getInstance().removeObject(o);
+            } catch (ObjectNotPresentException e) {
+                throw new RuntimeException(e);
             }
         }
+
         GraphicObjectHolder.getInstance().addObject(group);
         return true;
     }

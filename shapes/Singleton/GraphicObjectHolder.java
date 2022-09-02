@@ -59,6 +59,14 @@ public class GraphicObjectHolder {
     public void removeGroup(Group g) throws ObjectNotPresentException {
         if(groups.contains(g)){
             groups.remove(g);
+            for(GraphicObject obj : g.getObjects()){
+                if(obj.getType().equals("Group")){
+                    groups.add((Group) obj);
+                }
+                else{
+                    objects.add(obj);
+                }
+            }
         }
         else throw new ObjectNotPresentException("Il gruppo non è presente");
     }
@@ -70,17 +78,8 @@ public class GraphicObjectHolder {
             rimosso=true;
         }
         else if(groups.contains(o) && !rimosso){
-            Group g = (Group) o;
             groups.remove(o);
             rimosso=true;
-            for(GraphicObject obj : g.getObjects()){
-                if(obj.getType().equals("Group")){
-                    groups.add((Group) obj);
-                }
-                else{
-                    objects.add(obj);
-                }
-            }
         }
         if(!rimosso) throw new ObjectNotPresentException("L'ogetto non è presente");
     }

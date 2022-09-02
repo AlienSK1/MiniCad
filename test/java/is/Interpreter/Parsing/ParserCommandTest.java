@@ -1,20 +1,13 @@
 package is.Interpreter.Parsing;
 
-import is.Interpreter.Cmd;
-import is.Interpreter.Create;
-import is.Interpreter.TerminalExpression.Floating;
-import is.Interpreter.NonTerminalExpressions.Pos;
-import is.Interpreter.typeConstraint.Circle;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
-import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
